@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cookeasy</string>
+    <string name="home">Inicio</string>
+    <string name="search_hint">Buscar</string>
 </resources>
