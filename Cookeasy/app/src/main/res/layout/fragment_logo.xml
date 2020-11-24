@@ -1,0 +1,17 @@
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="Fragments.LogoFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/app_logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="70dp"
+        android:src="@drawable/icon" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

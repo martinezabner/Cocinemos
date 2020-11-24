@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="searchview_height">45dp</dimen>
-    <dimen name="margin">15dp</dimen>
+    <dimen name="margin">20dp</dimen>
     <dimen name="title">25sp</dimen>
     <dimen name="icon_button_size">35dp</dimen>
 </resources>

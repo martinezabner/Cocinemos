@@ -5,14 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/main_logo_background">
+    tools:context=".MainActivity" >
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/logo"
+    <FrameLayout
+        android:id="@+id/frg_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="70dp"
-        android:src="@drawable/logo" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

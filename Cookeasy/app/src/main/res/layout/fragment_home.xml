@@ -1,25 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    tools:context="Fragments.HomeFragment"
+    android:orientation="vertical"
+    android:layout_marginTop="30dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft ="15dp"
-        android:paddingRight ="15dp"
-        android:paddingTop="35dp"
-        android:paddingBottom="25dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/margin">
 
         <androidx.appcompat.widget.SearchView
             android:layout_width="0dp"
             android:layout_height="@dimen/searchview_height"
-            android:layout_marginRight="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
             android:background="@drawable/searchview_background"
             android:layout_weight="3"
             app:queryHint="@string/search_hint" />
@@ -28,9 +27,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/home"
-            android:layout_marginRight="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:fontFamily="monospace"
             android:textSize="@dimen/title"
             android:textAlignment="center"
             android:layout_weight="2"
@@ -45,6 +41,16 @@
 
     </LinearLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="@string/explore_categories" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_Category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
