@@ -1,13 +1,17 @@
 package Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -31,7 +35,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         holder.categoryName.setText(categoryList.get(position).getName());
-        holder.categoryImage.setImageResource(categoryList.get(position).getImage());
+        // int image = Integer.parseInt(categoryList.get(position).getImage());
+        // holder.categoryImage.setImageResource(image);
+        // holder.categoryImage.setImageResource(R.drawable.logo);
+        Picasso.get().load(categoryList.get(position).getImage()).into(holder.categoryImage);
     }
 
     @Override

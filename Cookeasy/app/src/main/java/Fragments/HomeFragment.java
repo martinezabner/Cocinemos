@@ -1,5 +1,7 @@
 package Fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +20,7 @@ import java.util.List;
 import Adapters.CategoryAdapter;
 import Data.CategoryRepository;
 import Models.Category;
+import uca.edu.ni.cookeasy.MainActivity;
 import uca.edu.ni.cookeasy.R;
 
 /**
@@ -30,6 +33,7 @@ public class HomeFragment extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
+    private Context context = null;
     private CategoryAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -43,6 +47,10 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment() {
         // Required empty public constructor
+    }
+
+    public HomeFragment(Context context) {
+        this.context = context;
     }
 
     /**
@@ -68,7 +76,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        categoryRepository = new CategoryRepository();
+        categoryRepository = new CategoryRepository(context);
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_Category);
         recyclerView.setHasFixedSize(true);

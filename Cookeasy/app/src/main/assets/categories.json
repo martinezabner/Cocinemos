@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "name": "Hamburguesas",
+      "image": "https://image.flaticon.com/icons/png/512/1046/1046784.png"
+    },
+    {
+      "name": "Tacos",
+      "image": "https://image.flaticon.com/icons/png/512/189/189149.png"
+    },
+    {
+      "name": "Carnes",
+      "image": "https://image.flaticon.com/icons/png/512/1046/1046769.png"
+    },
+    {
+      "name": "Pizza",
+      "image": "https://image.flaticon.com/icons/png/512/673/673887.png"
+    },
+    {
+      "name": "Ensaladas",
+      "image": "https://image.flaticon.com/icons/png/512/267/267917.png"
+    },
+    {
+      "name": "Repostería",
+      "image": "https://image.flaticon.com/icons/png/512/1033/1033843.png"
+    }
+  ]
+}

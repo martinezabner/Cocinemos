@@ -35,7 +35,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_height="@dimen/icon_button_size"
-            android:src="@drawable/favourites_icon"
+            android:src="@drawable/heart"
             android:layout_weight="1"
             />
 
@@ -50,6 +50,19 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_Category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="@string/new_recipes" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_New_Recipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

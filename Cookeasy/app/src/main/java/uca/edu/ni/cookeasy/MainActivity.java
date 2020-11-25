@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
-                HomeFragment homeFragment =  new HomeFragment();
+                HomeFragment homeFragment =  new HomeFragment(getBaseContext());
                 fragmentTransaction.replace(R.id.frg_main, homeFragment);
                 fragmentTransaction.commit();
             }

@@ -2,13 +2,13 @@ package Models;
 
 public class Category {
     private String name;
-    private int image;
+    private String image;
 
     Category() {
 
     }
 
-    public Category(String name, int image) {
+    public Category(String name, String image) {
         this.name = name;
         this.image = image;
     }
@@ -21,11 +21,11 @@ public class Category {
         this.name = name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }
