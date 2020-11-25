@@ -9,14 +9,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import java.util.List;
+
 import Adapters.CategoryAdapter;
+import Data.CategoryRepository;
 import Fragments.HomeFragment;
 import Fragments.LogoFragment;
+import Models.Category;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,10 +30,6 @@ public class MainActivity extends AppCompatActivity {
     // Variables
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +50,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }, SPLASH_SCREEN);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_Category);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new CategoryAdapter();
-        recyclerView.setAdapter(mAdapter);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void showLogo() {
@@ -65,4 +64,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frg_main, logoFragment);
         fragmentTransaction.commit();
     }
+
 }

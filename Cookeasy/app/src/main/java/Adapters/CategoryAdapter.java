@@ -43,6 +43,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         this.categoryList = categoryList;
     }
 
+    public void updateList(List<Category> newList) {
+        categoryList = newList;
+        notifyDataSetChanged();
+    }
+
+
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
         public TextView categoryName;
