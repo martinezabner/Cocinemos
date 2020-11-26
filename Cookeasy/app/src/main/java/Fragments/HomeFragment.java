@@ -18,8 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.CategoryAdapter;
+import Adapters.RecipeAdapter;
 import Data.CategoryRepository;
+import Data.RecipeRepository;
 import Models.Category;
+import Models.Recipe;
 import uca.edu.ni.cookeasy.MainActivity;
 import uca.edu.ni.cookeasy.R;
 
@@ -39,6 +42,13 @@ public class HomeFragment extends Fragment {
 
     List<Category> categoryList = new ArrayList<>();
     CategoryRepository categoryRepository;
+
+    private RecyclerView.LayoutManager lmNewRecipes;
+    private RecipeAdapter adapterRecipe;
+
+    List<Recipe> recipeList = new ArrayList<>();
+    RecipeRepository recipeRepository;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,6 +87,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         categoryRepository = new CategoryRepository(context);
+        recipeRepository = new RecipeRepository(context);
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_Category);
         recyclerView.setHasFixedSize(true);
@@ -85,17 +96,30 @@ public class HomeFragment extends Fragment {
         mAdapter = new CategoryAdapter(categoryList);
         recyclerView.setAdapter(mAdapter);
 
+        RecyclerView rvNewRecipes = view.findViewById(R.id.rv_New_Recipes);
+        rvNewRecipes.setHasFixedSize(true);
+        lmNewRecipes = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvNewRecipes.setLayoutManager(lmNewRecipes);
+        adapterRecipe = new RecipeAdapter(recipeList);
+        rvNewRecipes.setAdapter(adapterRecipe);
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        loadData();
+        loadDataCategory();
+        loadDataRecipe();
     }
 
-    private void loadData() {
+    private void loadDataCategory() {
         categoryList = categoryRepository.fillData();
         mAdapter.updateList(categoryList);
+    }
+
+    private void loadDataRecipe() {
+        recipeList = recipeRepository.fillData();
+        adapterRecipe.updateList(recipeList);
     }
 }
