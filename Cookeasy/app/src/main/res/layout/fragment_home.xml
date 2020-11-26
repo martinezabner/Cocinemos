@@ -42,44 +42,61 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/title"
-        android:layout_marginBottom="@dimen/margin"
-        android:text="@string/explore_categories" />
+        android:scrollbars="none">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_Category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/title"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginBottom="@dimen/margin"
-        android:text="@string/new_recipes" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_New_Recipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/title"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginBottom="@dimen/margin"
-        android:text="@string/recommended_recipes" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/title"
+                android:layout_marginBottom="@dimen/margin"
+                android:text="@string/explore_categories" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_Recommended_Recipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/title"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:text="@string/new_recipes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_New_Recipes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/title"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:text="@string/recommended_recipes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_Recommended_Recipes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
