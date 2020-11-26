@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "name": "Pasta Cremosa de Ajo",
+      "description": "Muy fácil de hacer y sabe espectacular",
+      "image": "https://lh3.ggpht.com/YN_XlaToWvZLsXu78Vo28-Wg0LE5fvIgIMLyvYy9YfQ0ZobXdcoddGELqBW8grDY_HYEYx24yvpC0KB6X98AxQ=s640-c-rw-v1-e365",
+      "category": "Pastas"
+    },
+    {
+      "name": "Filete de carne de New York",
+      "description": "Delicioso y jugoso filete New York",
+      "image": "https://lh3.googleusercontent.com/facWvPh5-amzEyZqqztKN29pplJ0093ZhtUwrdmZY05jlFYxUM7XuqTScmy5xDK1bqTtao_gehUPAkG53enNYjw=s640-c-rw-v1-e365",
+      "category": "Carnes"
+    },
+    {
+      "name": "La hamburguesa perfecta",
+      "description": "Espectacular, llena de sabor",
+      "image": "https://lh3.googleusercontent.com/QwgnmrymWb8AqXq3Qxh-tNTIL8_sjrcImnhhAv5VUuL6suf9voEzmg6PyDs1-tp5yHZNwBjeQIg-35VFlgE8Ag=s640-c-rw-v1-e365",
+      "category": "Hamburguesas"
+    },
+    {
+      "name": "Los mejores tacos de carne molida",
+      "description": "Sencillos y sabrosos",
+      "image": "https://lh5.ggpht.com/0_v5TxmS9h-jBxirFnE7psJgj8X_UxIBH7SCdPnMzdXBlQy7SeysH3tn74fFuNsQlIlhcTrMAAX_UoDHWTqY=s640-c-rw-v1-e365",
+      "category": "Tacos"
+    },
+    {
+      "name": "Pizza de vegetales asados",
+      "description": "Una pizza incomparable en sabor y nutritiva",
+      "image": "https://lh3.googleusercontent.com/b8msVyaMf8XJosiKLJelWP2o4gyKmEe0CpfknYLwmuiEhbdVDyjz5LEsz5Bg34jcxn1rypafmkblxzYXjFS9VKo=s640-c-rw-v1-e365",
+      "category": "Pizza"
+    },
+    {
+      "name": "Helado de arándanos sin lacteos",
+      "description": "100% vegano y delicioso",
+      "image": "https://lh3.googleusercontent.com/ZnlaJpPeXRhaQPN5yLJwjIJd8oCGzJQJhkX7wvLDhYWTgOypYkP1spOdqccaVQgMfVxUHledh5I9wL_tytO_KA=s640-c-rw-v1-e365",
+      "category": "Postres"
+    },
+    {
+      "name": "Ensalada de brócoli",
+      "description": "Lista en segundos",
+      "image": "https://lh3.googleusercontent.com/edTLwgeAkxg8wemnv1fMPiPJF8nWQU9RdFleex-0klQ2gO9Dtv_lFLqyNbLWRd4KM7pCHID0OGIt21xRhkaH=s640-c-rw-v1-e365",
+      "category": "Ensaladas"
+    }
+  ]
+}

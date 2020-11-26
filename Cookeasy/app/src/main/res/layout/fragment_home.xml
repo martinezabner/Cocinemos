@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="Fragments.HomeFragment"
     android:orientation="vertical"
+    android:scrollbars="vertical"
     android:layout_marginTop="30dp"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp">
@@ -66,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,5 +80,6 @@
         android:id="@+id/rv_Recommended_Recipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

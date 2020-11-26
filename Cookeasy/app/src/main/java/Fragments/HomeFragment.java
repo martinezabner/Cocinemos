@@ -49,7 +49,12 @@ public class HomeFragment extends Fragment {
     List<Recipe> recipeList = new ArrayList<>();
     RecipeRepository recipeRepository;
 
-    private RecyclerView.LayoutManager lmRecommended;
+    private RecipeAdapter adapterRecipeRecommended;
+    private RecyclerView.LayoutManager lmRecipesRecommended;
+
+    List<Recipe> recipeListRecommened = new ArrayList<>();
+    RecipeRepository recipeRepositoryRecommended;
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -90,6 +95,7 @@ public class HomeFragment extends Fragment {
 
         categoryRepository = new CategoryRepository(context);
         recipeRepository = new RecipeRepository(context);
+        recipeRepositoryRecommended = new RecipeRepository(context);
 
         RecyclerView recyclerView = view.findViewById(R.id.rv_Category);
         recyclerView.setHasFixedSize(true);
@@ -102,14 +108,15 @@ public class HomeFragment extends Fragment {
         rvNewRecipes.setHasFixedSize(true);
         lmNewRecipes = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvNewRecipes.setLayoutManager(lmNewRecipes);
-        adapterRecipe = new RecipeAdapter(recipeList);
+        adapterRecipe = new RecipeAdapter(recipeList, 0);
         rvNewRecipes.setAdapter(adapterRecipe);
 
-        RecyclerView rvRecommended = view.findViewById(R.id.rv_Recommended_Recipes);
-        rvRecommended.setHasFixedSize(true);
-        lmRecommended = new LinearLayoutManager(getContext());
-        rvRecommended.setLayoutManager(lmRecommended);
-        rvNewRecipes.setAdapter(adapterRecipe);
+        RecyclerView rvRecommendedRecipes = view.findViewById(R.id.rv_Recommended_Recipes);
+        rvRecommendedRecipes.setHasFixedSize(true);
+        lmRecipesRecommended = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        rvRecommendedRecipes.setLayoutManager(lmRecipesRecommended);
+        adapterRecipeRecommended = new RecipeAdapter(recipeListRecommened, 1);
+        rvRecommendedRecipes.setAdapter(adapterRecipeRecommended);
 
         return view;
     }
@@ -118,7 +125,8 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadDataCategory();
-        loadDataRecipe(0,"new_recipees.json");
+        loadDataRecipe("new_recipees.json");
+        //loadDataRecipe("recommended_recipees.json");
     }
 
     private void loadDataCategory() {
@@ -126,8 +134,11 @@ public class HomeFragment extends Fragment {
         mAdapter.updateList(categoryList);
     }
 
-    private void loadDataRecipe(int cardType, String recipeFile) {
+    private void loadDataRecipe(String recipeFile) {
         recipeList = recipeRepository.fillData(recipeFile);
-        adapterRecipe.updateList(recipeList, cardType);
+        adapterRecipe.updateList(recipeList);
+
+        recipeListRecommened = recipeRepositoryRecommended.fillData(recipeFile);
+        adapterRecipeRecommended.updateList(recipeListRecommened);
     }
 }

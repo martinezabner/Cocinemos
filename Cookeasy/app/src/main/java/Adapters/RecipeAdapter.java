@@ -1,14 +1,17 @@
 package Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.internal.$Gson$Preconditions;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,15 +24,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     List<Recipe> recipeList;
     View itemView;
-    int cardType = 0;
+    private int cardType;
 
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        itemView = layoutInflater.inflate(R.layout.cardview_new_recipe, parent, false);
 
-        return new RecipeViewHolder(itemView, cardType);
+        Log.d("", "On create CardType: " + cardType);
+
+        if (this.cardType == 0) {
+            itemView = layoutInflater.inflate(R.layout.cardview_new_recipe, parent, false);
+
+        }
+
+        if (this.cardType == 1) {
+            itemView = layoutInflater.inflate(R.layout.cardview_recommended_recipe, parent, false);
+        }
+
+        RecipeViewHolder recipeViewHolder = new RecipeViewHolder(itemView, this.cardType);
+
+        return recipeViewHolder;
     }
 
     @Override
@@ -44,27 +59,35 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return recipeList.size();
     }
 
-    public RecipeAdapter(List<Recipe> recipeList) {
+    public RecipeAdapter(List<Recipe> recipeList, int cardType) {
         this.recipeList = recipeList;
-    }
-
-    public void updateList(List<Recipe> newList, int cardType) {
-        recipeList = newList;
-        notifyDataSetChanged();
         this.cardType = cardType;
     }
 
-    public class RecipeViewHolder extends RecyclerView.ViewHolder {
+    public void updateList(List<Recipe> newList) {
+        recipeList = newList;
+        notifyDataSetChanged();
+    }
 
-        int cardType;
+    public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
         public TextView recipeName;
         public ImageView recipeImage;
         public TextView recipeDescription;
         public TextView recipeCategory;
+        private int cardType;
 
         public RecipeViewHolder(@NonNull View itemView, int cardType) {
             super(itemView);
+
+            Log.d("", "CardType: " + cardType);
+
+            this.cardType = cardType;
+
+            setView();
+        }
+
+        public void setView() {
             if (cardType == 0) {
                 recipeName = itemView.findViewById(R.id.tv_recipe_new);
                 recipeDescription = itemView.findViewById(R.id.tv_recipe_new_description);
@@ -72,10 +95,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             }
 
             if (cardType == 1) {
-
+                recipeName = itemView.findViewById(R.id.tv_recipe_recommended);
+                recipeDescription = itemView.findViewById(R.id.tv_recipe_recommended_description);
+                recipeImage = itemView.findViewById(R.id.iv_recipe_recommended);
             }
-
-            this.cardType = cardType;
         }
     }
 }
