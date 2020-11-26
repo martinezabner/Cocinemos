@@ -27,8 +27,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_recipe_image"
             android:layout_width="125dp"

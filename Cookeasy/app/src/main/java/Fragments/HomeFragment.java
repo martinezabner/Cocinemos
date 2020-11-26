@@ -43,11 +43,13 @@ public class HomeFragment extends Fragment {
     List<Category> categoryList = new ArrayList<>();
     CategoryRepository categoryRepository;
 
-    private RecyclerView.LayoutManager lmNewRecipes;
     private RecipeAdapter adapterRecipe;
+    private RecyclerView.LayoutManager lmNewRecipes;
 
     List<Recipe> recipeList = new ArrayList<>();
     RecipeRepository recipeRepository;
+
+    private RecyclerView.LayoutManager lmRecommended;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -103,6 +105,12 @@ public class HomeFragment extends Fragment {
         adapterRecipe = new RecipeAdapter(recipeList);
         rvNewRecipes.setAdapter(adapterRecipe);
 
+        RecyclerView rvRecommended = view.findViewById(R.id.rv_Recommended_Recipes);
+        rvRecommended.setHasFixedSize(true);
+        lmRecommended = new LinearLayoutManager(getContext());
+        rvRecommended.setLayoutManager(lmRecommended);
+        rvNewRecipes.setAdapter(adapterRecipe);
+
         return view;
     }
 
@@ -110,7 +118,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         loadDataCategory();
-        loadDataRecipe();
+        loadDataRecipe(0,"new_recipees.json");
     }
 
     private void loadDataCategory() {
@@ -118,8 +126,8 @@ public class HomeFragment extends Fragment {
         mAdapter.updateList(categoryList);
     }
 
-    private void loadDataRecipe() {
-        recipeList = recipeRepository.fillData();
-        adapterRecipe.updateList(recipeList);
+    private void loadDataRecipe(int cardType, String recipeFile) {
+        recipeList = recipeRepository.fillData(recipeFile);
+        adapterRecipe.updateList(recipeList, cardType);
     }
 }

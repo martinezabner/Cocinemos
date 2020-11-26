@@ -6,4 +6,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="explore_categories">Explorar categorías</string>
     <string name="new_recipes">Nuevas recetas</string>
+    <string name="recommended_recipes">Para ti</string>
 </resources>

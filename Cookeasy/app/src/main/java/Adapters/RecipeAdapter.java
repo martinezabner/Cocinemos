@@ -21,6 +21,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     List<Recipe> recipeList;
     View itemView;
+    int cardType = 0;
 
     @NonNull
     @Override
@@ -28,7 +29,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         itemView = layoutInflater.inflate(R.layout.cardview_new_recipe, parent, false);
 
-        return new RecipeViewHolder(itemView);
+        return new RecipeViewHolder(itemView, cardType);
     }
 
     @Override
@@ -47,21 +48,34 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         this.recipeList = recipeList;
     }
 
-    public void updateList(List<Recipe> newList) {
+    public void updateList(List<Recipe> newList, int cardType) {
         recipeList = newList;
         notifyDataSetChanged();
+        this.cardType = cardType;
     }
 
     public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
+        int cardType;
+
         public TextView recipeName;
         public ImageView recipeImage;
         public TextView recipeDescription;
-        public RecipeViewHolder(@NonNull View itemView) {
+        public TextView recipeCategory;
+
+        public RecipeViewHolder(@NonNull View itemView, int cardType) {
             super(itemView);
-            recipeName = itemView.findViewById(R.id.tv_recipe_new);
-            recipeDescription = itemView.findViewById(R.id.tv_recipe_new_description);
-            recipeImage = itemView.findViewById(R.id.iv_recipe_new);
+            if (cardType == 0) {
+                recipeName = itemView.findViewById(R.id.tv_recipe_new);
+                recipeDescription = itemView.findViewById(R.id.tv_recipe_new_description);
+                recipeImage = itemView.findViewById(R.id.iv_recipe_new);
+            }
+
+            if (cardType == 1) {
+
+            }
+
+            this.cardType = cardType;
         }
     }
 }

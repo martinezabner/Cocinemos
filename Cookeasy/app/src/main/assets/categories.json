@@ -1,8 +1,8 @@
 {
   "data": [
     {
-      "name": "Hamburguesas",
-      "image": "https://image.flaticon.com/icons/png/512/1046/1046784.png"
+      "name": "Carnes",
+      "image": "https://image.flaticon.com/icons/png/512/1046/1046769.png"
     },
     {
       "name": "Pastas",
@@ -13,15 +13,15 @@
       "image": "https://image.flaticon.com/icons/png/512/189/189149.png"
     },
     {
-      "name": "Carnes",
-      "image": "https://image.flaticon.com/icons/png/512/1046/1046769.png"
-    },
-    {
       "name": "Pizza",
       "image": "https://image.flaticon.com/icons/png/512/673/673887.png"
     },
     {
-      "name": "Helado",
+      "name": "Hamburguesas",
+      "image": "https://image.flaticon.com/icons/png/512/1046/1046784.png"
+    },
+    {
+      "name": "Postres",
       "image": "https://image.flaticon.com/icons/png/512/527/527788.png"
     },
     {

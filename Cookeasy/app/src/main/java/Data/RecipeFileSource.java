@@ -15,7 +15,7 @@ public class RecipeFileSource implements RecipeSource {
 
     private final Gson gson;
     private final Context mContext;
-    private static final String RECIPES_FILE_NAME = "new_recipees.json";
+    // private static final String RECIPES_FILE_NAME = "new_recipees.json";
 
     public RecipeFileSource(Context context) {
         mContext = context;
@@ -23,8 +23,8 @@ public class RecipeFileSource implements RecipeSource {
     }
 
     @Override
-    public List<Recipe> fillData() {
-        String json = FileHelper.getJsonFromAssets(mContext, RECIPES_FILE_NAME);
+    public List<Recipe> fillData(String recipeFile) {
+        String json = FileHelper.getJsonFromAssets(mContext, recipeFile);
         ListResult listResult = gson.fromJson(json, ListResult.class);
         if(listResult == null) return null;
         return listResult.list;

@@ -5,5 +5,5 @@ import java.util.List;
 import Models.Recipe;
 
 public interface RecipeSource {
-    List<Recipe> fillData();
+    List<Recipe> fillData(String recipeFile);
 }

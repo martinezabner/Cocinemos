@@ -16,5 +16,5 @@ public class RecipeRepository {
         mSource = new RecipeFileSource(context);
     }
 
-    public List<Recipe> fillData() { return mSource.fillData(); }
+    public List<Recipe> fillData(String recipeFile) { return mSource.fillData(recipeFile); }
 }
