@@ -19,9 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.ref.Reference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Adapters.CategoryAdapter;
 import Adapters.RecipeAdapter;
@@ -40,7 +44,7 @@ import uca.edu.ni.cookeasy.R;
  */
 public class HomeFragment extends Fragment implements OnFavTapListener {
 
-    private static final int NEW_RECIPEES_VIEW_ID = 2131230809;
+    private static final int NEW_RECIPEES_VIEW_ID = 2131230811;
     private static final int RECOMMENDED_RECIPEES_VIEW_ID = 2131230810;
 
     private ViewGroup rootView;
@@ -69,6 +73,9 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     RecipeRepository recipeRepositoryRecommended;
 
     RecyclerView rvRecommendedRecipes;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -142,7 +149,6 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         super.onResume();
         loadDataCategory();
         loadDataRecipe();
-        //loadDataRecipe();
     }
 
     private void loadDataCategory() {
@@ -187,6 +193,8 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         } else {
             selectedRecipe = getSelected(position);
         }
+
+        Toast.makeText(context, String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
 
         if (selectedRecipe.getFavourite() == 0) {
             message = String.format("%s ha sido añadido a los favoritos", selectedRecipe.getName());

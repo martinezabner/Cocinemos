@@ -13,7 +13,7 @@ public class RecipeRepository {
     RecipeSource mSource;
 
     public RecipeRepository(@NonNull Context context) {
-        mSource = new RecipeFileSource(context);
+        mSource = new RecipeMockSource(context);
     }
 
     public List<Recipe> fillData(String recipeFile) { return mSource.fillData(recipeFile); }

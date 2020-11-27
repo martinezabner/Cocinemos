@@ -19,6 +19,15 @@ public class Recipe {
         this.category = category;
     }
 
+    public Recipe(String name, String image, String description, String category, int favourite, int recommended) {
+        this.name = name;
+        this.image = image;
+        this.description = description;
+        this.category = category;
+        this.favourite = favourite;
+        this.recommended = recommended;
+    }
+
     public String getName() {
         return name;
     }
