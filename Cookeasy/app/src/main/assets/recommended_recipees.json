@@ -4,19 +4,22 @@
       "name": "La hamburguesa perfecta",
       "description": "Espectacular, llena de sabor",
       "image": "https://lh3.googleusercontent.com/QwgnmrymWb8AqXq3Qxh-tNTIL8_sjrcImnhhAv5VUuL6suf9voEzmg6PyDs1-tp5yHZNwBjeQIg-35VFlgE8Ag=s640-c-rw-v1-e365",
-      "category": "Hamburguesas"
+      "category": "Hamburguesas",
+      "favourite":0
     },
     {
       "name": "Los mejores tacos de carne molida",
       "description": "Sencillos y sabrosos",
       "image": "https://lh5.ggpht.com/0_v5TxmS9h-jBxirFnE7psJgj8X_UxIBH7SCdPnMzdXBlQy7SeysH3tn74fFuNsQlIlhcTrMAAX_UoDHWTqY=s640-c-rw-v1-e365",
-      "category": "Tacos"
+      "category": "Tacos",
+      "favourite":0
     },
     {
       "name": "Helado de arándanos sin lacteos",
       "description": "100% vegano y delicioso",
       "image": "https://lh3.googleusercontent.com/ZnlaJpPeXRhaQPN5yLJwjIJd8oCGzJQJhkX7wvLDhYWTgOypYkP1spOdqccaVQgMfVxUHledh5I9wL_tytO_KA=s640-c-rw-v1-e365",
-      "category": "Postres"
+      "category": "Postres",
+      "favourite":0
     }
   ]
 }

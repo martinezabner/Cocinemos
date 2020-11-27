@@ -25,7 +25,7 @@ import Models.Category;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN = 1000;
+    private static int SPLASH_SCREEN = 600;
 
     // Variables
     FragmentManager fragmentManager;

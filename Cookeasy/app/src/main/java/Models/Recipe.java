@@ -5,6 +5,8 @@ public class Recipe {
     private String image;
     private String description;
     private String category;
+    private int favourite;
+    private int recommended;
 
     public Recipe() {
 
@@ -47,5 +49,21 @@ public class Recipe {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(int favourite) {
+        this.favourite = favourite;
+    }
+
+    public int getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(int recommended) {
+        this.recommended = recommended;
     }
 }
