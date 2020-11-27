@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.internal.$Gson$Preconditions;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Common.OnFavTapListener;
@@ -79,7 +80,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     }
 
     public void updateList(List<Recipe> newList) {
+
+        List<Recipe> filteredList = new ArrayList<>();
+
+        if (cardType == 1) {
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i).getRecommended() == 1) {
+                    filteredList.add(newList.get(i));
+                }
+            }
+            newList = filteredList;
+        }
+
         recipeList = newList;
+
         notifyDataSetChanged();
     }
 

@@ -161,7 +161,7 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         List<Recipe> filteredList = new ArrayList<>();
 
         for (int i = 0; i < recipeListRecommened.size(); i++) {
-            if (recipeListRecommened.get(i).getRecommended() == 1) {
+            if (recipeList.get(i).getRecommended() == 1) {
                 filteredList.add(recipeListRecommened.get(i));
             }
         }
@@ -185,7 +185,6 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         } else {
             selectedRecipe = recipeListRecommened.get(position);
         }
-
 
         if (selectedRecipe.getFavourite() == 0) {
             message = String.format("%s ha sido añadido a los favoritos", selectedRecipe.getName());
