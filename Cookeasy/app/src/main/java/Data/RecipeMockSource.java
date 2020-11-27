@@ -1,6 +1,7 @@
 package Data;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,21 +51,21 @@ public class RecipeMockSource implements RecipeSource {
                     models.removeAll(models);
                 }
 
-                for (int i = 0; i < 7; i++) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     models.add(new Recipe(
-                            dataSnapshot.child(String.valueOf(i)).child("name").getValue(String.class),
-                            dataSnapshot.child(String.valueOf(i)).child("image").getValue(String.class),
-                            dataSnapshot.child(String.valueOf(i)).child("description").getValue(String.class),
-                            dataSnapshot.child(String.valueOf(i)).child("category").getValue(String.class),
-                            dataSnapshot.child(String.valueOf(i)).child("favourite").getValue(Long.class).intValue(),
-                            dataSnapshot.child(String.valueOf(i)).child("recommended").getValue(Long.class).intValue()
+                            snapshot.child("name").getValue(String.class),
+                            snapshot.child("image").getValue(String.class),
+                            snapshot.child("description").getValue(String.class),
+                            snapshot.child("category").getValue(String.class),
+                            snapshot.child("favourite").getValue(Long.class).intValue(),
+                            snapshot.child("recommended").getValue(Long.class).intValue()
                     ));
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                
             }
         });
     }
