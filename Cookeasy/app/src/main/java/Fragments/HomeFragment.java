@@ -10,10 +10,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -64,10 +66,9 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     private RecipeAdapter adapterRecipeRecommended;
     private RecyclerView.LayoutManager lmRecipesRecommended;
 
-    List<Recipe> recipeListRecommened = new ArrayList<>();
     RecipeRepository recipeRepositoryRecommended;
 
-
+    RecyclerView rvRecommendedRecipes;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -126,11 +127,11 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         adapterRecipe = new RecipeAdapter(recipeList, 0, this);
         rvNewRecipes.setAdapter(adapterRecipe);
 
-        RecyclerView rvRecommendedRecipes = view.findViewById(R.id.rv_Recommended_Recipes);
+        rvRecommendedRecipes = view.findViewById(R.id.rv_Recommended_Recipes);
         rvRecommendedRecipes.setHasFixedSize(true);
         lmRecipesRecommended = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvRecommendedRecipes.setLayoutManager(lmRecipesRecommended);
-        adapterRecipeRecommended = new RecipeAdapter(recipeListRecommened, 1, this);
+        adapterRecipeRecommended = new RecipeAdapter(recipeList, 1, this);
         rvRecommendedRecipes.setAdapter(adapterRecipeRecommended);
 
         return view;
@@ -152,28 +153,29 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     private void loadDataRecipe() {
         recipeList = recipeRepository.fillData("new_recipees.json");
         adapterRecipe.updateList(recipeList);
-
-        // recipeListRecommened = recipeRepositoryRecommended.fillData("recommended_recipees.json");
-        // adapterRecipeRecommended.updateList(recipeListRecommened);
-
-        recipeListRecommened = recipeRepositoryRecommended.fillData("new_recipees.json");
-
-        List<Recipe> filteredList = new ArrayList<>();
-
-        for (int i = 0; i < recipeListRecommened.size(); i++) {
-            if (recipeList.get(i).getRecommended() == 1) {
-                filteredList.add(recipeListRecommened.get(i));
-            }
-        }
-
-        recipeListRecommened = filteredList;
-
-        adapterRecipeRecommended.updateList(recipeListRecommened);
+        adapterRecipeRecommended.updateList(recipeList);
     }
 
     @Override
     public void onFavTap(View view, int position) {
         addFavourite(view, position);
+    }
+
+    private Recipe getSelected(int position) {
+
+        Recipe selectedRecipe;
+        String name =
+                ((TextView) rvRecommendedRecipes.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.tv_recipe_recommended)).getText().toString();
+
+        for (int i = 0; i < recipeList.size(); i++) {
+            if (recipeList.get(i).getName() == name) {
+                position = i;
+            }
+        }
+
+        selectedRecipe = recipeList.get(position);
+
+        return selectedRecipe;
     }
 
     private void addFavourite(View view, int position) {
@@ -183,7 +185,7 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         if (view.getId() == NEW_RECIPEES_VIEW_ID) {
             selectedRecipe = recipeList.get(position);
         } else {
-            selectedRecipe = recipeListRecommened.get(position);
+            selectedRecipe = getSelected(position);
         }
 
         if (selectedRecipe.getFavourite() == 0) {
@@ -194,23 +196,15 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
             selectedRecipe.setFavourite(0);
         }
 
-        updateElement(view, position);
+        updateElement();
 
-        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 
-    private void updateElement(View view, int position) {
+    private void updateElement() {
 
-
-        switch (view.getId()) {
-            case NEW_RECIPEES_VIEW_ID:
-                adapterRecipe.notifyItemChanged(position);
-                break;
-            case RECOMMENDED_RECIPEES_VIEW_ID:
-                adapterRecipeRecommended.notifyItemChanged(position);
-                break;
-
-        }
+        adapterRecipe.notifyDataSetChanged();
+        adapterRecipeRecommended.notifyDataSetChanged();
     }
 }
