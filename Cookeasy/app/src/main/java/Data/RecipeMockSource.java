@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.xml.namespace.QName;
@@ -47,7 +48,7 @@ public class RecipeMockSource implements RecipeSource {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                
                 models.removeAll(models);
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
