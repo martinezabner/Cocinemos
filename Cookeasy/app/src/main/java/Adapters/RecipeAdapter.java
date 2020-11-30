@@ -42,7 +42,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         }
 
-        if (this.cardType == 1) {
+        if (this.cardType == 1 || cardType == 2) {
             itemView = layoutInflater.inflate(R.layout.cardview_recommended_recipe, parent, false);
         }
 
@@ -91,6 +91,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             newList = filteredList;
         }
 
+        if (cardType == 2) {
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i).getFavourite() == 1) {
+                    filteredList.add(newList.get(i));
+                }
+            }
+            newList = filteredList;
+        }
+
         recipeList = newList;
 
         notifyDataSetChanged();
@@ -133,7 +142,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 });
             }
 
-            if (cardType == 1) {
+            if (cardType == 1 || cardType == 2) {
                 recipeName = itemView.findViewById(R.id.tv_recipe_recommended);
                 recipeDescription = itemView.findViewById(R.id.tv_recipe_recommended_description);
                 recipeImage = itemView.findViewById(R.id.iv_recipe_recommended);
@@ -148,6 +157,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                     }
                 });
             }
+
         }
     }
 }

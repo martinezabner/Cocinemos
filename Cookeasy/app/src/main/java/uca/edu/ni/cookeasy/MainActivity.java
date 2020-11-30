@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     public void favouritesOnClick(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        FavouritesFragment favouritesFragment = new FavouritesFragment();
+        FavouritesFragment favouritesFragment = new FavouritesFragment(getBaseContext());
         fragmentTransaction.replace(R.id.frg_main, favouritesFragment);
         fragmentTransaction.commit();
         fragmentTransaction.addToBackStack(null);

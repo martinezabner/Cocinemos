@@ -1,13 +1,57 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:id="@+id/ly_home"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Fragments.FavouritesFragment">
+    tools:context="Fragments.HomeFragment"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    android:layout_marginTop="30dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/margin">
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/searchview_height"
+            android:background="@drawable/searchview_background"
+            android:layout_weight="3"
+            app:queryHint="@string/search_hint" />
+
+    </LinearLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:scrollbars="none">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/title"
+                android:layout_marginBottom="@dimen/margin"
+                android:text="@string/favourite" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_favourites"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

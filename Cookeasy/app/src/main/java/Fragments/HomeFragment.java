@@ -174,9 +174,7 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     private Recipe getSelected(int position) {
 
         Recipe selectedRecipe;
-        /*String name =
-                ((TextView) rvRecommendedRecipes.findViewHolderForAdapterPosition(position)
-                        .itemView.findViewById(R.id.tv_recipe_recommended)).getText().toString();*/
+
         RecipeAdapter.RecipeViewHolder viewHolder =
                 (RecipeAdapter.RecipeViewHolder)rvRecommendedRecipes.findViewHolderForAdapterPosition(position);
 
@@ -196,7 +194,7 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         return selectedRecipe;
     }
 
-    private void addFavourite(View view, int position) {
+    public void addFavourite(View view, int position) {
         String message = "";
         Recipe selectedRecipe;
         int fav = 0;
