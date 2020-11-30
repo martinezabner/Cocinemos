@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import Common.OnRecipesReceivedListener;
 import Helpers.FileHelper;
 import Models.Category;
 import Models.Recipe;
@@ -23,11 +24,10 @@ public class RecipeFileSource implements RecipeSource {
     }
 
     @Override
-    public List<Recipe> fillData(String recipeFile) {
-        String json = FileHelper.getJsonFromAssets(mContext, recipeFile);
+    public void fillData(OnRecipesReceivedListener listener) {
+        /*String json = FileHelper.getJsonFromAssets(mContext, recipeFile);
         ListResult listResult = gson.fromJson(json, ListResult.class);
-        if(listResult == null) return null;
-        return listResult.list;
+        if(listResult == null) return null;*/
     }
 
     static class ListResult {

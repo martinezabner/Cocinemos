@@ -37,8 +37,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
-        Log.d("", "On create CardType: " + cardType);
-
         if (this.cardType == 0) {
             itemView = layoutInflater.inflate(R.layout.cardview_new_recipe, parent, false);
 
@@ -66,6 +64,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         } else if (currentRecipe.getFavourite() == 0) {
             holder.recipeFavButton.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
         }
+        holder.modelId = currentRecipe.getName(); //TODO: sustituir por ID
     }
 
     @Override
@@ -105,11 +104,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         public Button recipeFavButton;
         public TextView recipeCategory;
         private int cardType;
+        public String modelId;
 
         public RecipeViewHolder(@NonNull View itemView, int cardType, @Nullable OnFavTapListener favTapListener) {
             super(itemView);
 
-            Log.d("", "CardType: " + cardType);
+            // Log.d("", "CardType: " + cardType);
 
             this.cardType = cardType;
 

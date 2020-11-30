@@ -1,6 +1,7 @@
 package Models;
 
 public class Recipe {
+    private String id;
     private String name;
     private String image;
     private String description;
@@ -19,13 +20,22 @@ public class Recipe {
         this.category = category;
     }
 
-    public Recipe(String name, String image, String description, String category, int favourite, int recommended) {
+    public Recipe(String id, String name, String image, String description, String category, int favourite, int recommended) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.description = description;
         this.category = category;
         this.favourite = favourite;
         this.recommended = recommended;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -30,6 +30,7 @@ import java.util.Random;
 import Adapters.CategoryAdapter;
 import Adapters.RecipeAdapter;
 import Common.OnFavTapListener;
+import Common.OnRecipesReceivedListener;
 import Data.CategoryRepository;
 import Data.RecipeRepository;
 import Models.Category;
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     private RecyclerView.LayoutManager lmNewRecipes;
 
     List<Recipe> recipeList = new ArrayList<>();
+
     RecipeRepository recipeRepository;
 
     private RecipeAdapter adapterRecipeRecommended;
@@ -157,9 +159,11 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     }
 
     private void loadDataRecipe() {
-        recipeList = recipeRepository.fillData("new_recipees.json");
-        adapterRecipe.updateList(recipeList);
-        adapterRecipeRecommended.updateList(recipeList);
+        recipeRepository.fillData(recipes -> {
+            recipeList = recipes;
+            adapterRecipe.updateList(recipes);
+            adapterRecipeRecommended.updateList(recipeList);
+        });
     }
 
     @Override
@@ -170,11 +174,19 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     private Recipe getSelected(int position) {
 
         Recipe selectedRecipe;
-        String name =
-                ((TextView) rvRecommendedRecipes.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.tv_recipe_recommended)).getText().toString();
+        /*String name =
+                ((TextView) rvRecommendedRecipes.findViewHolderForAdapterPosition(position)
+                        .itemView.findViewById(R.id.tv_recipe_recommended)).getText().toString();*/
+        RecipeAdapter.RecipeViewHolder viewHolder =
+                (RecipeAdapter.RecipeViewHolder)rvRecommendedRecipes.findViewHolderForAdapterPosition(position);
+
+        if(viewHolder == null) {
+            Log.e("shit", "algo salio mal");
+            return null;
+        }
 
         for (int i = 0; i < recipeList.size(); i++) {
-            if (recipeList.get(i).getName() == name) {
+            if (recipeList.get(i).getName().equals(viewHolder.modelId)) {
                 position = i;
             }
         }
@@ -187,6 +199,7 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     private void addFavourite(View view, int position) {
         String message = "";
         Recipe selectedRecipe;
+        int fav = 0;
 
         if (view.getId() == NEW_RECIPEES_VIEW_ID) {
             selectedRecipe = recipeList.get(position);
@@ -194,25 +207,24 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
             selectedRecipe = getSelected(position);
         }
 
-        Toast.makeText(context, String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(context, String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
 
         if (selectedRecipe.getFavourite() == 0) {
             message = String.format("%s ha sido añadido a los favoritos", selectedRecipe.getName());
-            selectedRecipe.setFavourite(1);
+            fav = 1;
         } else if (selectedRecipe.getFavourite() == 1) {
             message = String.format("%s ha sido removido de los favoritos", selectedRecipe.getName());
-            selectedRecipe.setFavourite(0);
+            fav = 0;
         }
 
-        updateElement();
+        updateDBFav(selectedRecipe.getId(), fav);
 
         Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 
-    private void updateElement() {
-
-        adapterRecipe.notifyDataSetChanged();
-        adapterRecipeRecommended.notifyDataSetChanged();
+    private void updateDBFav(String id,  int fav) {
+        reference = FirebaseDatabase.getInstance().getReference("recipees");
+        reference.child(id).child("favourite").setValue(fav);
     }
 }

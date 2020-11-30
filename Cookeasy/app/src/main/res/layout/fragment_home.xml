@@ -37,9 +37,9 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_height="@dimen/icon_button_size"
-            android:src="@drawable/heart"
             android:layout_weight="1"
-            />
+            android:src="@drawable/heart"
+            android:onClick="favouritesOnClick" />
 
     </LinearLayout>
 

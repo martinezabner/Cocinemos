@@ -2,8 +2,9 @@ package Data;
 
 import java.util.List;
 
+import Common.OnRecipesReceivedListener;
 import Models.Recipe;
 
 public interface RecipeSource {
-    List<Recipe> fillData(String recipeFile);
+    void fillData(OnRecipesReceivedListener listener);
 }

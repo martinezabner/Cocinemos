@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
+import Common.OnRecipesReceivedListener;
 import Models.Recipe;
 
 public class RecipeRepository {
@@ -16,5 +17,7 @@ public class RecipeRepository {
         mSource = new RecipeMockSource(context);
     }
 
-    public List<Recipe> fillData(String recipeFile) { return mSource.fillData(recipeFile); }
+    public void fillData(OnRecipesReceivedListener listener) {
+        mSource.fillData(listener);
+    }
 }

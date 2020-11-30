@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import Adapters.CategoryAdapter;
 import Data.CategoryRepository;
+import Fragments.FavouritesFragment;
 import Fragments.HomeFragment;
 import Fragments.LogoFragment;
 import Models.Category;
@@ -63,6 +65,16 @@ public class MainActivity extends AppCompatActivity {
         LogoFragment logoFragment =  new LogoFragment();
         fragmentTransaction.replace(R.id.frg_main, logoFragment);
         fragmentTransaction.commit();
+    }
+
+    public void favouritesOnClick(View view) {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        FavouritesFragment favouritesFragment = new FavouritesFragment();
+        fragmentTransaction.replace(R.id.frg_main, favouritesFragment);
+        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null);
+
     }
 
 }

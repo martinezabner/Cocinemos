@@ -2,6 +2,8 @@ package Data;
 
 import android.content.Context;
 import android.provider.ContactsContract;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,40 +21,38 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
+import Common.OnRecipesReceivedListener;
 import Models.Category;
 import Models.Recipe;
 
 public class RecipeMockSource implements RecipeSource {
 
     Context mContext;
-    List<Recipe> models = new ArrayList<>();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("recipees");
 
     public RecipeMockSource(Context context) {
         mContext = context;
-        getData();
     }
 
     @Override
-    public List<Recipe> fillData(String recipeFile) {
-
-        return models;
+    public void fillData(OnRecipesReceivedListener listener) {
+        getData(listener);
     }
 
-    private void getData() {
+    private void getData(OnRecipesReceivedListener listener) {
+        List<Recipe> models = new ArrayList<>();
 
-       myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (!models.isEmpty()) {
-                    models.removeAll(models);
-                }
+                models.removeAll(models);
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     models.add(new Recipe(
+                            snapshot.getKey(),
                             snapshot.child("name").getValue(String.class),
                             snapshot.child("image").getValue(String.class),
                             snapshot.child("description").getValue(String.class),
@@ -61,11 +61,13 @@ public class RecipeMockSource implements RecipeSource {
                             snapshot.child("recommended").getValue(Long.class).intValue()
                     ));
                 }
+
+                listener.onSuccess(models);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                
+
             }
         });
     }
