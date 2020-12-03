@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Common.OnFavTapListener;
+import Common.OnItemTapListener;
 import Models.Category;
 import Models.Recipe;
 import uca.edu.ni.cookeasy.R;
@@ -31,6 +32,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private int cardType;
     @Nullable
     private OnFavTapListener mFavTapListener;
+    @Nullable
+    private OnItemTapListener mItemTapListener;
 
     @NonNull
     @Override
@@ -46,7 +49,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             itemView = layoutInflater.inflate(R.layout.cardview_recommended_recipe, parent, false);
         }
 
-        RecipeViewHolder recipeViewHolder = new RecipeViewHolder(itemView, this.cardType, mFavTapListener);
+        RecipeViewHolder recipeViewHolder = new RecipeViewHolder(itemView, this.cardType, mFavTapListener, mItemTapListener);
 
         return recipeViewHolder;
     }
@@ -72,10 +75,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return recipeList.size();
     }
 
-    public RecipeAdapter(List<Recipe> recipeList, int cardType, @Nullable OnFavTapListener favTapListener) {
+    public RecipeAdapter(List<Recipe> recipeList, int cardType, @Nullable OnFavTapListener favTapListener, @Nullable OnItemTapListener itemTapListener) {
         this.recipeList = recipeList;
         this.cardType = cardType;
         mFavTapListener = favTapListener;
+        mItemTapListener = itemTapListener;
     }
 
     public void updateList(List<Recipe> newList) {
@@ -105,7 +109,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         notifyDataSetChanged();
     }
 
-    public class RecipeViewHolder extends RecyclerView.ViewHolder {
+    public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView recipeName;
         public ImageView recipeImage;
@@ -115,7 +119,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         private int cardType;
         public String modelId;
 
-        public RecipeViewHolder(@NonNull View itemView, int cardType, @Nullable OnFavTapListener favTapListener) {
+        public RecipeViewHolder(@NonNull View itemView, int cardType, @Nullable OnFavTapListener favTapListener, @Nullable OnItemTapListener itemTapListener) {
             super(itemView);
 
             // Log.d("", "CardType: " + cardType);
@@ -123,6 +127,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             this.cardType = cardType;
 
             setView();
+
         }
 
         public void setView() {
@@ -138,6 +143,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                             return;
                         }
                         mFavTapListener.onFavTap(view, getAdapterPosition());
+                    }
+                });
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(mItemTapListener == null) {
+                            return;
+                        }
+                        mItemTapListener.onItemTapListener(view, getAdapterPosition());
                     }
                 });
             }
@@ -156,8 +170,25 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                         mFavTapListener.onFavTap(view, getAdapterPosition());
                     }
                 });
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(mItemTapListener == null) {
+                            return;
+                        }
+                        mItemTapListener.onItemTapListener(view, getAdapterPosition());
+                    }
+                });
             }
 
+        }
+
+        @Override
+        public void onClick(View clickedView) {
+            if(mItemTapListener == null) {
+                return;
+            }
+            mItemTapListener.onItemTapListener(clickedView, getAdapterPosition());
         }
     }
 }

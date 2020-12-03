@@ -30,6 +30,7 @@ import java.util.Random;
 import Adapters.CategoryAdapter;
 import Adapters.RecipeAdapter;
 import Common.OnFavTapListener;
+import Common.OnItemTapListener;
 import Common.OnRecipesReceivedListener;
 import Data.CategoryRepository;
 import Data.RecipeRepository;
@@ -43,10 +44,7 @@ import uca.edu.ni.cookeasy.R;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements OnFavTapListener {
-
-    private static final int NEW_RECIPEES_VIEW_ID = 2131230811;
-    private static final int RECOMMENDED_RECIPEES_VIEW_ID = 2131230810;
+public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTapListener {
 
     private ViewGroup rootView;
 
@@ -54,6 +52,11 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     FragmentTransaction fragmentTransaction;
 
     private View generalView;
+
+    private static final int NEW_RECIPEES_VIEW_ID = 2131230811;
+    private static final int RECOMMENDED_RECIPEES_VIEW_ID = 2131230810;
+    private static final int CARDVIEW_NEW_ID = 2131230817;
+
 
     private Context context = null;
     private CategoryAdapter mAdapter;
@@ -133,14 +136,14 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         rvNewRecipes.setHasFixedSize(true);
         lmNewRecipes = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvNewRecipes.setLayoutManager(lmNewRecipes);
-        adapterRecipe = new RecipeAdapter(recipeList, 0, this);
+        adapterRecipe = new RecipeAdapter(recipeList, 0, this, this);
         rvNewRecipes.setAdapter(adapterRecipe);
 
         rvRecommendedRecipes = view.findViewById(R.id.rv_Recommended_Recipes);
         rvRecommendedRecipes.setHasFixedSize(true);
         lmRecipesRecommended = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvRecommendedRecipes.setLayoutManager(lmRecipesRecommended);
-        adapterRecipeRecommended = new RecipeAdapter(recipeList, 1, this);
+        adapterRecipeRecommended = new RecipeAdapter(recipeList, 1, this, this);
         rvRecommendedRecipes.setAdapter(adapterRecipeRecommended);
 
         return view;
@@ -199,6 +202,8 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
         Recipe selectedRecipe;
         int fav = 0;
 
+        Log.d("",String.valueOf(view.getId()));
+
         if (view.getId() == NEW_RECIPEES_VIEW_ID) {
             selectedRecipe = recipeList.get(position);
         } else {
@@ -224,5 +229,34 @@ public class HomeFragment extends Fragment implements OnFavTapListener {
     private void updateDBFav(String id,  int fav) {
         reference = FirebaseDatabase.getInstance().getReference("recipees");
         reference.child(id).child("favourite").setValue(fav);
+    }
+
+    @Override
+    public void onItemTapListener(View view, int position) {
+        showMessageWithSelectedItem(view, position);
+    }
+
+    private void showMessageWithSelectedItem(View view, int position) {
+        Recipe selectedRecipe;
+        /*if (view.getId() == NEW_RECIPEES_VIEW_ID) {
+            selectedRecipe = recipeList.get(position);
+        } else {
+            selectedRecipe = getSelected(position);
+        }*/
+        selectedRecipe = getSelected(position);
+        // Toast.makeText(context, String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
+        if (view.getId() == CARDVIEW_NEW_ID) {
+            selectedRecipe = recipeList.get(position);
+        } else {
+            selectedRecipe = getSelected(position);
+        }
+
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        RecipeFragment recipeFragment = new RecipeFragment(context, selectedRecipe);
+        fragmentTransaction.replace(R.id.frg_main, recipeFragment);
+        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null);
+
     }
 }

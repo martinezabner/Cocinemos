@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="180dp"
-    android:layout_height="250dp"
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardview_new_recipe"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="195dp"
+    android:layout_height="260dp"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -14,15 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_recipe_image"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
             app:cardCornerRadius="70dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="40dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -43,10 +43,11 @@
             android:layout_marginTop="10dp"
             android:textSize="14sp"
             android:singleLine="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:maxLines="1"
             android:text="Tacos al pastor"
             app:layout_constraintTop_toBottomOf="@id/cv_recipe_image"/>
 
@@ -55,12 +56,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:singleLine="false"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:maxLines="3"
             android:text="Tacos al pastor"
             app:layout_constraintTop_toBottomOf="@id/tv_recipe_new"/>
 

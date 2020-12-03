@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frg_main, favouritesFragment);
         fragmentTransaction.commit();
         fragmentTransaction.addToBackStack(null);
-
     }
+
+
 
 }

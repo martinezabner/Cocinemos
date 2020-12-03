@@ -21,6 +21,7 @@ import java.util.List;
 
 import Adapters.RecipeAdapter;
 import Common.OnFavTapListener;
+import Common.OnItemTapListener;
 import Data.RecipeRepository;
 import Models.Recipe;
 import uca.edu.ni.cookeasy.R;
@@ -30,7 +31,7 @@ import uca.edu.ni.cookeasy.R;
  * Use the {@link FavouritesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavouritesFragment extends Fragment implements OnFavTapListener {
+public class FavouritesFragment extends Fragment implements OnFavTapListener, OnItemTapListener {
 
     private static final int NEW_RECIPEES_VIEW_ID = 2131230811;
 
@@ -81,7 +82,7 @@ public class FavouritesFragment extends Fragment implements OnFavTapListener {
         rvRecipes.setHasFixedSize(true);
         lmRecipes = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvRecipes.setLayoutManager(lmRecipes);
-        adapterRecipe = new RecipeAdapter(recipeList, 2, this);
+        adapterRecipe = new RecipeAdapter(recipeList, 2, this, this);
         rvRecipes.setAdapter(adapterRecipe);
 
         return view;
@@ -156,5 +157,15 @@ public class FavouritesFragment extends Fragment implements OnFavTapListener {
     private void updateDBFav(String id,  int fav) {
         reference = FirebaseDatabase.getInstance().getReference("recipees");
         reference.child(id).child("favourite").setValue(fav);
+    }
+
+    @Override
+    public void onItemTapListener(View view, int position) {
+        showMessageWithSelectedItem(position);
+    }
+
+    private void showMessageWithSelectedItem(int position) {
+        // Toast.makeText(this, String.format("%s", recipeList.get(position).getName()), Toast.LENGTH_SHORT).show();
+        Log.d("",recipeList.get(position).getName());
     }
 }
