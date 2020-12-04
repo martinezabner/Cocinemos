@@ -34,19 +34,17 @@ import uca.edu.ni.cookeasy.R;
  * Use the {@link RecipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecipeFragment extends Fragment implements View.OnClickListener, OnRecipesReceivedListener, OnFavTapListener, OnItemTapListener {
+public class RecipeFragment extends Fragment implements View.OnClickListener {
 
     private Context context;
     private ViewGroup rootView;
     View view;
     private Recipe mSelectedRecipe;
-    private RecipeRepository recipeRepository = new RecipeRepository(context);
-    private List<Recipe> recipeList = new ArrayList<>();
-    private RecipeAdapter adapterRecipe;
 
-    TextView recipeName, recipeDescription;
-    ImageView recipeImage;
+    TextView recipeName, recipeDescription, tvClock, tvServings, tvIngredients, items;
+    ImageView recipeImage, clock, servings, ingredients;
     Button btn_recipe;
+    String[] imagesLinks;
 
     DatabaseReference reference;
 
@@ -77,13 +75,27 @@ public class RecipeFragment extends Fragment implements View.OnClickListener, On
         view = inflater.inflate(R.layout.fragment_recipe, container, false);
         rootView = view.findViewById(R.id.fl_recipe);
 
-        adapterRecipe = new RecipeAdapter(recipeList, 0, this, this);
+        imagesLinks = new String[]{
+                                "https://image.flaticon.com/icons/png/512/252/252055.png",
+                                "https://res.cloudinary.com/franksprachen/image/upload/v1607074568/cookeasy/pie-chart_iwtavm.png",
+                                "https://res.cloudinary.com/franksprachen/image/upload/v1607074566/cookeasy/ingredients_xcy1jp.png"
+        };
 
         recipeImage = view.findViewById(R.id.iv_recipe_image);
+        clock = view.findViewById(R.id.iv1);
+        servings = view.findViewById(R.id.iv2);
+        ingredients = view.findViewById(R.id.iv3);
         btn_recipe = view.findViewById(R.id.btn_recipe);
         recipeName = view.findViewById(R.id.tv_recipe_name);
         recipeDescription = view.findViewById(R.id.tv_recipe_description);
+        tvClock = view.findViewById(R.id.tv_time);
+        tvServings = view.findViewById(R.id.tv_servings);
+        tvIngredients = view.findViewById(R.id.tv_ingredients);
+        items = view.findViewById(R.id.tv_recipe_ingredients);
         Picasso.get().load(mSelectedRecipe.getImage()).into(recipeImage);
+        Picasso.get().load(imagesLinks[0]).into(clock);
+        Picasso.get().load(imagesLinks[1]).into(servings);
+        Picasso.get().load(imagesLinks[2]).into(ingredients);
 
         setView();
 
@@ -92,105 +104,62 @@ public class RecipeFragment extends Fragment implements View.OnClickListener, On
         return view;
     }
 
-    @Override
-    public void onClick(View view) {
-        int fav = 0;
-
-        if (mSelectedRecipe.getFavourite() == 0) {
-            fav = 1;
-        }
-
-        reference = FirebaseDatabase.getInstance().getReference("recipees");
-        reference.child(mSelectedRecipe.getId()).child("favourite").setValue(fav);
-
-        addFavourite();
-        loadData();
-        updateObject();
-
-    }
-
-    @Override
-    public void onSuccess(List<Recipe> recipes) {
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadData();
-    }
-
-    private void updateObject() {
-        for (int i = 0; i < recipeList.size(); i++) {
-            Log.d("","First: " + recipeList.get(i).getId() + "Second: " + mSelectedRecipe.getId());
-            if (recipeList.get(i).getId() == mSelectedRecipe.getId()) {
-                mSelectedRecipe = recipeList.get(i);
-                setView();
-                Log.d("","Second: " + mSelectedRecipe.getId());
-            }
-        }
-
-    }
-
     private void setView() {
 
         recipeName.setText(mSelectedRecipe.getName());
         recipeDescription.setText(mSelectedRecipe.getDescription());
+        tvClock.setText(mSelectedRecipe.getTime());
+        tvServings.setText(mSelectedRecipe.getServings());
+        tvIngredients.setText(mSelectedRecipe.getNumingredients());
+        items.setText(setIngredientsList());
 
         if (mSelectedRecipe.getFavourite() == 0) {
             btn_recipe.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
-            Log.d("","NoFav");
         } else {
             btn_recipe.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
-            Log.d("","Fav");
         }
     }
 
-    private void loadData() {
-        recipeRepository.fillData(recipes -> {
-            recipeList = recipes;
-            adapterRecipe.updateList(recipes);
-        });
+    private String setIngredientsList() {
+
+        String ingredients = "";
+        String[] arrIngredients = mSelectedRecipe.getIngredients().split(",");
+
+        for (String item: arrIngredients) {
+            ingredients = ingredients + "-" + item + "\n";
+        }
+
+        return ingredients;
     }
 
     @Override
-    public void onFavTap(View view, int position) {
-        addFavourite();
-
-    }
-
-    public void addFavourite() {
-        String message = "";
-        Recipe selectedRecipe = new Recipe();
+    public void onClick(View view) {
         int fav = 0;
+        String message = "";
 
-        for (int i = 0; i < recipeList.size(); i++) {
-            if (recipeList.get(i).getId() == mSelectedRecipe.getId()) {
-                selectedRecipe = recipeList.get(i);
-            }
-        }
-
-        if (selectedRecipe.getFavourite() == 0) {
-            message = String.format("%s ha sido añadido a los favoritos", selectedRecipe.getName());
+        if (mSelectedRecipe.getFavourite() == 0) {
             fav = 1;
-        } else if (selectedRecipe.getFavourite() == 1) {
-            message = String.format("%s ha sido removido de los favoritos", selectedRecipe.getName());
-            fav = 0;
         }
 
-        updateDBFav(selectedRecipe.getId(), fav);
+        mSelectedRecipe.setFavourite(fav);
+
+        reference = FirebaseDatabase.getInstance().getReference("recipees");
+        reference.child(mSelectedRecipe.getId()).child("favourite").setValue(fav);
+
+        if (fav == 0) {
+            btn_recipe.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24);
+            message = String.format("%s ha sido removido de los favoritos", mSelectedRecipe.getName());
+        } else {
+            btn_recipe.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
+            message = String.format("%s ha sido añadido a los favoritos", mSelectedRecipe.getName());
+        }
 
         Snackbar snackbar = Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
 
-    private void updateDBFav(String id,  int fav) {
-        reference = FirebaseDatabase.getInstance().getReference("recipees");
-        reference.child(id).child("favourite").setValue(fav);
-    }
-
     @Override
-    public void onItemTapListener(View view, int position) {
-
+    public void onResume() {
+        super.onResume();
     }
 }

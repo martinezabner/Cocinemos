@@ -8,6 +8,10 @@ public class Recipe {
     private String category;
     private int favourite;
     private int recommended;
+    private String time;
+    private String servings;
+    private String numingredients;
+    private String ingredients;
 
     public Recipe() {
 
@@ -20,7 +24,7 @@ public class Recipe {
         this.category = category;
     }
 
-    public Recipe(String id, String name, String image, String description, String category, int favourite, int recommended) {
+    public Recipe(String id, String name, String image, String description, String category, int favourite, int recommended, String time, String servings, String numingredients, String ingredients) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -28,6 +32,10 @@ public class Recipe {
         this.category = category;
         this.favourite = favourite;
         this.recommended = recommended;
+        this.time = time;
+        this.servings = servings;
+        this.numingredients = numingredients;
+        this.ingredients = ingredients;
     }
 
     public String getId() {
@@ -84,5 +92,37 @@ public class Recipe {
 
     public void setRecommended(int recommended) {
         this.recommended = recommended;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getServings() {
+        return servings;
+    }
+
+    public void setServings(String servings) {
+        this.servings = servings;
+    }
+
+    public String getNumingredients() {
+        return numingredients;
+    }
+
+    public void setNumingredients(String numingredients) {
+        this.numingredients = numingredients;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
     }
 }

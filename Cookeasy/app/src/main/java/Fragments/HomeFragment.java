@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
 
     private static final int NEW_RECIPEES_VIEW_ID = 2131230811;
     private static final int RECOMMENDED_RECIPEES_VIEW_ID = 2131230810;
-    private static final int CARDVIEW_NEW_ID = 2131230817;
+    private static final int CARDVIEW_NEW_ID = 2131230818;
 
 
     private Context context = null;

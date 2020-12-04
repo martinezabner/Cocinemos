@@ -8,4 +8,7 @@
     <string name="new_recipes">Nuevas recetas</string>
     <string name="recommended_recipes">Para ti</string>
     <string name="favourite">Favoritos</string>
+    <string name="description">Descripción</string>
+    <string name="details">Detalles</string>
+    <string name="ingredients">Ingredientes</string>
 </resources>

@@ -59,7 +59,11 @@ public class RecipeMockSource implements RecipeSource {
                             snapshot.child("description").getValue(String.class),
                             snapshot.child("category").getValue(String.class),
                             snapshot.child("favourite").getValue(Long.class).intValue(),
-                            snapshot.child("recommended").getValue(Long.class).intValue()
+                            snapshot.child("recommended").getValue(Long.class).intValue(),
+                            snapshot.child("time").getValue(String.class),
+                            snapshot.child("servings").getValue(String.class),
+                            snapshot.child("numingredients").getValue(String.class),
+                            snapshot.child("ingredients").getValue(String.class)
                     ));
                 }
 
