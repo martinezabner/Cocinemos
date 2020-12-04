@@ -78,6 +78,7 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
     RecipeRepository recipeRepositoryRecommended;
 
     RecyclerView rvRecommendedRecipes;
+    RecyclerView recyclerView;
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
@@ -125,11 +126,16 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
         recipeRepository = new RecipeRepository(context);
         recipeRepositoryRecommended = new RecipeRepository(context);
 
-        RecyclerView recyclerView = view.findViewById(R.id.rv_Category);
+        recyclerView = view.findViewById(R.id.rv_Category);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new CategoryAdapter(categoryList);
+        mAdapter = new CategoryAdapter(categoryList, new OnItemTapListener() {
+            @Override
+            public void onItemTapListener(View view, int position) {
+                openCategory(view, position);
+            }
+        });
         recyclerView.setAdapter(mAdapter);
 
         RecyclerView rvNewRecipes = view.findViewById(R.id.rv_New_Recipes);
@@ -164,8 +170,8 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
     private void loadDataRecipe() {
         recipeRepository.fillData(recipes -> {
             recipeList = recipes;
-            adapterRecipe.updateList(recipes);
-            adapterRecipeRecommended.updateList(recipeList);
+            adapterRecipe.updateList(recipes, "", "");
+            adapterRecipeRecommended.updateList(recipeList, "", "");
         });
     }
 
@@ -233,10 +239,10 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
 
     @Override
     public void onItemTapListener(View view, int position) {
-        showMessageWithSelectedItem(view, position);
+        openRecipe(view, position);
     }
 
-    private void showMessageWithSelectedItem(View view, int position) {
+    private void openRecipe(View view, int position) {
         Recipe selectedRecipe;
         /*if (view.getId() == NEW_RECIPEES_VIEW_ID) {
             selectedRecipe = recipeList.get(position);
@@ -258,5 +264,23 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
         fragmentTransaction.commit();
         fragmentTransaction.addToBackStack(null);
 
+    }
+
+    private void openCategory(View view, int position) {
+        String category = "";
+
+        CategoryAdapter.CategoryViewHolder viewHolder =
+                (CategoryAdapter.CategoryViewHolder)recyclerView.findViewHolderForAdapterPosition(position);
+
+        category = viewHolder.category;
+
+        Toast.makeText(context, "" + category, Toast.LENGTH_SHORT).show();
+
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        CategoryFragment categoryFragment = new CategoryFragment(context, category);
+        fragmentTransaction.replace(R.id.frg_main, categoryFragment);
+        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null);
     }
 }

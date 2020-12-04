@@ -12,6 +12,7 @@ public class Recipe {
     private String servings;
     private String numingredients;
     private String ingredients;
+    private String preparation;
 
     public Recipe() {
 
@@ -24,7 +25,7 @@ public class Recipe {
         this.category = category;
     }
 
-    public Recipe(String id, String name, String image, String description, String category, int favourite, int recommended, String time, String servings, String numingredients, String ingredients) {
+    public Recipe(String id, String name, String image, String description, String category, int favourite, int recommended, String time, String servings, String numingredients, String ingredients, String preparation) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -36,6 +37,7 @@ public class Recipe {
         this.servings = servings;
         this.numingredients = numingredients;
         this.ingredients = ingredients;
+        this.preparation = preparation;
     }
 
     public String getId() {
@@ -124,5 +126,13 @@ public class Recipe {
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getPreparation() {
+        return preparation;
+    }
+
+    public void setPreparation(String preparation) {
+        this.preparation = preparation;
     }
 }

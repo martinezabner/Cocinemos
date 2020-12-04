@@ -45,7 +45,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         }
 
-        if (this.cardType == 1 || cardType == 2) {
+        if (this.cardType == 1 || cardType == 2 || cardType == 3) {
             itemView = layoutInflater.inflate(R.layout.cardview_recommended_recipe, parent, false);
         }
 
@@ -82,7 +82,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         mItemTapListener = itemTapListener;
     }
 
-    public void updateList(List<Recipe> newList) {
+    public void updateList(List<Recipe> newList, CharSequence search, String category) {
 
         List<Recipe> filteredList = new ArrayList<>();
 
@@ -97,12 +97,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         if (cardType == 2) {
             for (int i = 0; i < newList.size(); i++) {
-                if (newList.get(i).getFavourite() == 1) {
+                if (newList.get(i).getFavourite() == 1 && newList.get(i).getName().contains(search)) {
+                    filteredList.add(newList.get(i));
+                }
+            }
+            newList = filteredList;
+
+        }
+
+        if (cardType == 3) {
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i).getCategory().contains(category) && newList.get(i).getName().contains(search)) {
                     filteredList.add(newList.get(i));
                 }
             }
             newList = filteredList;
         }
+
+        Log.d("","Entró");
 
         recipeList = newList;
 
@@ -121,8 +133,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         public RecipeViewHolder(@NonNull View itemView, int cardType, @Nullable OnFavTapListener favTapListener, @Nullable OnItemTapListener itemTapListener) {
             super(itemView);
-
-            // Log.d("", "CardType: " + cardType);
 
             this.cardType = cardType;
 
@@ -156,7 +166,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 });
             }
 
-            if (cardType == 1 || cardType == 2) {
+            if (cardType == 1 || cardType == 2 || cardType == 3) {
                 recipeName = itemView.findViewById(R.id.tv_recipe_recommended);
                 recipeDescription = itemView.findViewById(R.id.tv_recipe_recommended_description);
                 recipeImage = itemView.findViewById(R.id.iv_recipe_recommended);

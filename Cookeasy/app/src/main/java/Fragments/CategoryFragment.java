@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapters.CategoryAdapter;
 import Adapters.RecipeAdapter;
 import Common.OnFavTapListener;
 import Common.OnItemTapListener;
@@ -32,10 +33,10 @@ import uca.edu.ni.cookeasy.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FavouritesFragment#newInstance} factory method to
+ * Use the {@link CategoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavouritesFragment extends Fragment implements OnFavTapListener, OnItemTapListener {
+public class CategoryFragment extends Fragment implements OnFavTapListener, OnItemTapListener {
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -43,9 +44,12 @@ public class FavouritesFragment extends Fragment implements OnFavTapListener, On
     private View view;
     private Context context = null;
 
+    private String category;
+
+    private TextView categoryName;
     private RecipeAdapter adapterRecipe;
     private RecyclerView.LayoutManager lmRecipes;
-    private SearchView svFav;
+    private SearchView svCat;
 
     List<Recipe> recipeList = new ArrayList<>();
 
@@ -56,36 +60,35 @@ public class FavouritesFragment extends Fragment implements OnFavTapListener, On
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
-
-    public FavouritesFragment() {
+    public CategoryFragment() {
         // Required empty public constructor
     }
 
-    public FavouritesFragment(Context context) {
+    public CategoryFragment(Context context, String category) {
         this.context = context;
+        this.category = category;
     }
 
-
-    public static FavouritesFragment newInstance() {
-        FavouritesFragment fragment = new FavouritesFragment();
+    public static CategoryFragment newInstance(String param1, String param2) {
+        CategoryFragment fragment = new CategoryFragment();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_favourites, container, false);
+        view = inflater.inflate(R.layout.fragment_category, container, false);
 
         recipeRepository = new RecipeRepository(context);
 
-        svFav = view.findViewById(R.id.sv_fav);
-        svFav.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        svCat = view.findViewById(R.id.sv_fav);
+        svCat.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 loadData();
@@ -99,11 +102,14 @@ public class FavouritesFragment extends Fragment implements OnFavTapListener, On
             }
         });
 
-        rvRecipes = view.findViewById(R.id.rv_favourites);
+        categoryName = view.findViewById(R.id.tv_category_name);
+        categoryName.setText(category);
+
+        rvRecipes = view.findViewById(R.id.rv_category);
         rvRecipes.setHasFixedSize(true);
         lmRecipes = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvRecipes.setLayoutManager(lmRecipes);
-        adapterRecipe = new RecipeAdapter(recipeList, 2, this, this);
+        adapterRecipe = new RecipeAdapter(recipeList, 3, this, this);
         rvRecipes.setAdapter(adapterRecipe);
 
         return view;
@@ -118,7 +124,7 @@ public class FavouritesFragment extends Fragment implements OnFavTapListener, On
     private void loadData() {
         recipeRepository.fillData(recipes -> {
             recipeList = recipes;
-            adapterRecipe.updateList(recipeList, svFav.getQuery(), "");
+            adapterRecipe.updateList(recipeList, svCat.getQuery(), category);
         });
     }
 
