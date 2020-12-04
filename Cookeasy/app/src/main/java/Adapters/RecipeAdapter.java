@@ -45,7 +45,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
         }
 
-        if (this.cardType == 1 || cardType == 2 || cardType == 3) {
+        if (this.cardType == 1 || cardType == 2 || cardType == 3 || cardType == 4) {
             itemView = layoutInflater.inflate(R.layout.cardview_recommended_recipe, parent, false);
         }
 
@@ -114,7 +114,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             newList = filteredList;
         }
 
-        Log.d("","Entró");
+        if (cardType == 4) {
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i).getName().contains(search)) {
+                    filteredList.add(newList.get(i));
+                }
+            }
+            newList = filteredList;
+        }
 
         recipeList = newList;
 
@@ -166,7 +173,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 });
             }
 
-            if (cardType == 1 || cardType == 2 || cardType == 3) {
+            if (cardType == 1 || cardType == 2 || cardType == 3 || cardType == 4) {
                 recipeName = itemView.findViewById(R.id.tv_recipe_recommended);
                 recipeDescription = itemView.findViewById(R.id.tv_recipe_recommended_description);
                 recipeImage = itemView.findViewById(R.id.iv_recipe_recommended);

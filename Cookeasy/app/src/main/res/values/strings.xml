@@ -12,4 +12,5 @@
     <string name="details">Detalles</string>
     <string name="ingredients">Ingredientes</string>
     <string name="preparation">Indicaciones</string>
+    <string name="search_results">Resultados de búsqueda</string>
 </resources>

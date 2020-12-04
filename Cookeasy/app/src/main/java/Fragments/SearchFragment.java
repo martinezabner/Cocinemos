@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapters.CategoryAdapter;
 import Adapters.RecipeAdapter;
 import Common.OnFavTapListener;
 import Common.OnItemTapListener;
@@ -33,10 +31,10 @@ import uca.edu.ni.cookeasy.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CategoryFragment#newInstance} factory method to
+ * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoryFragment extends Fragment implements OnFavTapListener, OnItemTapListener {
+public class SearchFragment extends Fragment implements OnFavTapListener, OnItemTapListener  {
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -44,12 +42,9 @@ public class CategoryFragment extends Fragment implements OnFavTapListener, OnIt
     private View view;
     private Context context = null;
 
-    private String category;
-
-    private TextView categoryName;
     private RecipeAdapter adapterRecipe;
     private RecyclerView.LayoutManager lmRecipes;
-    private SearchView svCat;
+    private SearchView svSearch;
 
     List<Recipe> recipeList = new ArrayList<>();
 
@@ -60,17 +55,19 @@ public class CategoryFragment extends Fragment implements OnFavTapListener, OnIt
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
-    public CategoryFragment() {
+    String lastSearch;
+
+    public SearchFragment() {
         // Required empty public constructor
     }
 
-    public CategoryFragment(Context context, String category) {
+    public SearchFragment(Context context, String search) {
         this.context = context;
-        this.category = category;
+        lastSearch = search;
     }
 
-    public static CategoryFragment newInstance(String param1, String param2) {
-        CategoryFragment fragment = new CategoryFragment();
+    public static SearchFragment newInstance() {
+        SearchFragment fragment = new SearchFragment();
         return fragment;
     }
 
@@ -83,12 +80,13 @@ public class CategoryFragment extends Fragment implements OnFavTapListener, OnIt
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_category, container, false);
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        recipeRepository = new RecipeRepository(context);
-
-        svCat = view.findViewById(R.id.sv_fav);
-        svCat.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        svSearch = view.findViewById(R.id.sv_results);
+        svSearch.setIconified(false);
+        svSearch.setQuery(lastSearch, true);
+        svSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 loadData();
@@ -102,14 +100,13 @@ public class CategoryFragment extends Fragment implements OnFavTapListener, OnIt
             }
         });
 
-        categoryName = view.findViewById(R.id.tv_category_name);
-        categoryName.setText(category);
+        recipeRepository = new RecipeRepository(context);
 
-        rvRecipes = view.findViewById(R.id.rv_category);
+        rvRecipes = view.findViewById(R.id.rv_search);
         rvRecipes.setHasFixedSize(true);
         lmRecipes = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rvRecipes.setLayoutManager(lmRecipes);
-        adapterRecipe = new RecipeAdapter(recipeList, 3, this, this);
+        adapterRecipe = new RecipeAdapter(recipeList, 4, this, this);
         rvRecipes.setAdapter(adapterRecipe);
 
         return view;
@@ -124,7 +121,7 @@ public class CategoryFragment extends Fragment implements OnFavTapListener, OnIt
     private void loadData() {
         recipeRepository.fillData(recipes -> {
             recipeList = recipes;
-            adapterRecipe.updateList(recipeList, svCat.getQuery(), category);
+            adapterRecipe.updateList(recipeList, svSearch.getQuery(), "");
         });
     }
 
@@ -162,6 +159,8 @@ public class CategoryFragment extends Fragment implements OnFavTapListener, OnIt
         int fav = 0;
 
         selectedRecipe = getSelected(position);
+
+        // Toast.makeText(context, String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
 
         if (selectedRecipe.getFavourite() == 0) {
             message = String.format("%s ha sido añadido a los favoritos", selectedRecipe.getName());

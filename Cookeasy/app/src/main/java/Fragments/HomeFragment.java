@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -57,7 +58,6 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
     private static final int RECOMMENDED_RECIPEES_VIEW_ID = 2131230810;
     private static final int CARDVIEW_NEW_ID = 2131230818;
 
-
     private Context context = null;
     private CategoryAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -82,6 +82,8 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
+
+    SearchView searchView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -121,6 +123,20 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
         rootView = view.findViewById(R.id.ly_home);
 
         generalView = view;
+
+        searchView = view.findViewById(R.id.sv_home);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                openResults();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         categoryRepository = new CategoryRepository(context);
         recipeRepository = new RecipeRepository(context);
@@ -274,12 +290,20 @@ public class HomeFragment extends Fragment implements OnFavTapListener, OnItemTa
 
         category = viewHolder.category;
 
-        Toast.makeText(context, "" + category, Toast.LENGTH_SHORT).show();
-
         fragmentManager = getActivity().getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         CategoryFragment categoryFragment = new CategoryFragment(context, category);
         fragmentTransaction.replace(R.id.frg_main, categoryFragment);
+        fragmentTransaction.commit();
+        fragmentTransaction.addToBackStack(null);
+    }
+
+    private void openResults() {
+        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        SearchFragment searchFragment = new SearchFragment(context, searchView.getQuery().toString());
+        searchView.setQuery("", false);
+        fragmentTransaction.replace(R.id.frg_main, searchFragment);
         fragmentTransaction.commit();
         fragmentTransaction.addToBackStack(null);
     }

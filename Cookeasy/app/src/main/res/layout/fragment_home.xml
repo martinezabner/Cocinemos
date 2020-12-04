@@ -19,6 +19,7 @@
         android:layout_marginBottom="@dimen/margin">
 
         <androidx.appcompat.widget.SearchView
+            android:id="@+id/sv_home"
             android:layout_width="0dp"
             android:layout_height="@dimen/searchview_height"
             android:background="@drawable/searchview_background"
